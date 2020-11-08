@@ -3,7 +3,7 @@ local Luang = module("vrp", "lib/Luang")
 
 local personalGarages = class("personalGarages", vRP.Extension)
 
-local function menu_sv_vehicles(self)
+local function menu_pg_vehicles(self)
 	
 	local function m_sub(menu, model)
 		local user = menu.user
@@ -45,7 +45,7 @@ local function menu_sv_vehicles(self)
 		end
 	end
 	
-	vRP.EXT.GUI:registerMenuBuilder("sv.vehicles", function(menu)
+	vRP.EXT.GUI:registerMenuBuilder("pg.vehicles", function(menu)
 		menu.title = self.lang.titles.sub()
 		menu.css.header_color = "rgba(0,125,200,0.75)"
 		local user = menu.user
@@ -53,16 +53,16 @@ local function menu_sv_vehicles(self)
 		for model in pairs(user:getVehicles()) do
 			local veh = menu.data.vehicles[model]
 			if veh then
-				menu:addOption(veh[1], m_sub, nil, model)
+				menu:addOption(veh[1], m_sub, veh[2], model)
 			end
 		end
 	end)
 end
 
-local function menu_sv(self)
+local function menu_pg(self)
 	
 	local function m_owned(menu)
-		local smenu = menu.user:openMenu("sv.vehicles", menu.data)
+		local smenu = menu.user:openMenu("pg.vehicles", menu.data)
 
 		menu:listen("remove", function(menu)
 			menu.user:closeMenu(smenu)
@@ -108,7 +108,7 @@ local function menu_sv(self)
 		end
 	end
 	
-	vRP.EXT.GUI:registerMenuBuilder("sv", function(menu)
+	vRP.EXT.GUI:registerMenuBuilder("pg", function(menu)
 		menu.title = self.lang.titles.title({menu.data.type})
 		menu.css.header_color = "rgba(255,125,0,0.75)"
 
@@ -140,8 +140,8 @@ function personalGarages:__construct()
 	self.luang:loadLocale(vRP.cfg.lang, module("vrp_personalGarages", "cfg/lang/"..vRP.cfg.lang))
 	self.lang = self.luang.lang[vRP.cfg.lang]
 	
-	menu_sv(self)
-	menu_sv_vehicles(self)
+	menu_pg(self)
+	menu_pg_vehicles(self)
 	
 end
 
@@ -159,7 +159,7 @@ function personalGarages.event:playerSpawn(user, first_spawn)
 				
 				local menu
 				local function enter(user)
-					menu = user:openMenu("sv", {type = gtype, vehicles = group})
+					menu = user:openMenu("pg", {type = gtype, vehicles = group})
 				end
 				
 				-- leave
