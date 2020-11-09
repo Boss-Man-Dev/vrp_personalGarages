@@ -71,7 +71,7 @@ local function menu_pg(self)
   
 	local function m_store(menu)
 		local user = menu.user
-
+		
 		local model = vRP.EXT.Garage.remote.getNearestOwnedVehicle(user.source, 15)
 		if model then
 			if menu.data.vehicles[model] then -- model in this garage
@@ -90,11 +90,14 @@ local function menu_pg(self)
 					if vehicles[model] then 
 						vehicles[model] = 1 -- mark as in garage
 					end
-					vRP.EXT.Base.remote._notify(user.source, self.lang.store.stored({model}))
+					
+					local veh = menu.data.vehicles[model]
+					vRP.EXT.Base.remote._notify(user.source, self.lang.store.stored({veh[1]}))
 				end
 			end
 		else
-			vRP.EXT.Base.remote._notify(user.source, self.lang.store.too_far({model}))
+			local veh = menu.data.vehicles[model]
+			vRP.EXT.Base.remote._notify(user.source, self.lang.store.too_far({veh[1]}))
 		end
 	end
 	
