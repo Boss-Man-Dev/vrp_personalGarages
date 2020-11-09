@@ -16,7 +16,7 @@ local lang = {
 	},
 	store = {
 		stored = "You have stored {1}",
-		too_far = "You need to be Closer to store {1}",
+		too_far = "You need to be Closer to store your Vehicle",
 	},
 }
 
