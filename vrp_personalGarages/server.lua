@@ -35,8 +35,8 @@ local function menu_pg_vehicles(self)
 					}
 
 					vehicles[model] = 0 -- mark as out
-					vRP.EXT.Garage.remote.remote._spawnVehicle(user.source, model, state)
-					vRP.EXT.Garage.remote.remote._setOutVehicles(user.source, {[model] = {state, vstate.position, vstate.rotation}})
+					vRP.EXT.Garage.remote._spawnVehicle(user.source, model, state)
+					vRP.EXT.Garage.remote._setOutVehicles(user.source, {[model] = {state, vstate.position, vstate.rotation}})
 					user:closeMenu(menu)
 				else
 					vRP.EXT.Base.remote._notify(user.source, lang.money.not_enough())
@@ -96,8 +96,7 @@ local function menu_pg(self)
 				end
 			end
 		else
-			local veh = menu.data.vehicles[model]
-			vRP.EXT.Base.remote._notify(user.source, self.lang.store.too_far({veh[1]}))
+			vRP.EXT.Base.remote._notify(user.source, self.lang.store.too_far())
 		end
 	end
 	
